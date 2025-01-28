@@ -47,13 +47,14 @@ import os
 from groq import Groq
 
 GROQ_API_KEY=os.environ.get("GROQ_API_KEY")
-client=Groq(api_key=GROQ_API_KEY)
-
 stt_model="whisper-large-v3"
-transcription=client.audio.transcriptions.create(
-    model=stt_model,
-    file=audio_filepath,
-    language="en"
-)
 
-print(transcription)
+def transcribe_with_groq(stt_model, audio_filepath, GROQ_API_KEY):
+    client=Groq(api_key=GROQ_API_KEY)
+    transcription=client.audio.transcriptions.create(
+        model=stt_model,
+        file=audio_filepath,
+        language="en"
+    )
+
+    return transcription.text
